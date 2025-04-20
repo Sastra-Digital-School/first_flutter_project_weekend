@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Sastra Digital')),
-      body: Center(child: Text('Welcome')),
+      body: Center(child: Text('Welcome to my world')),
     );
   }
 }
