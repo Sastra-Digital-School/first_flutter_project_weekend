@@ -6,8 +6,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sastra Digital School')),
-      body: Center(child: Text('Welcome to my world')),
+      appBar: AppBar(title: Text('Sastra Digital School Flutter')),
+      body: Center(child: Text('Welcome to my world - Flutter')),
     );
   }
 }
