@@ -13,18 +13,10 @@ class HomeScreen extends StatelessWidget {
   }
 
   get _buildBody {
-    return Column(
-      children: [
-        const Text('Home Screen'),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            shape: BoxShape.circle,
-          ),
-          height: 100,
-          width: 100,
-        ),
-      ],
+    return Container(
+      decoration: BoxDecoration(color: Colors.amber, shape: BoxShape.circle),
+      height: 100,
+      width: 100,
     );
   }
 }
