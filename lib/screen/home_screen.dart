@@ -5,8 +5,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Sastra Digital School Flutter update')),
+    return Scaffold(appBar: _buildAppBar(), body: _buildBody);
+  }
+
+  get _buildAppBar {
+    return AppBar(title: const Text('Home'));
+  }
+
+  get _buildBody {
+    return Column(
+      children: [
+        const Text('Home Screen'),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            shape: BoxShape.circle,
+          ),
+          height: 100,
+          width: 100,
+        ),
+      ],
     );
   }
 }
