@@ -13,6 +13,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   get _buildBody {
-    return Container(color: Colors.amber);
+    return Container(color: Colors.amber, child: SizedBox());
   }
 }
