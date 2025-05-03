@@ -90,12 +90,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      ElevatedButton(
-        onPressed: () {
-          print('Sithy');
-        },
-        child: Text('Button'),
-      ),
+      ElevatedButton(onPressed: () {}, child: Text('Button')),
       OutlinedButton(onPressed: () {}, child: Text('data')),
       IconButton(onPressed: () {}, icon: Icon(Icons.access_alarm)),
     ],
