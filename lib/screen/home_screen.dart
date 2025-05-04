@@ -1,14 +1,52 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  int _counter = 0;
+  bool _changeColor = false;
+
+  void setCurrentIndex(int newIndex) {
+    setState(() {
+      _currentIndex = newIndex;
+    });
+  }
+
+  void changeColor() {
+    setState(() {
+      _changeColor = !_changeColor;
+    });
+    print(_changeColor);
+  }
+
+  void incresment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void descresment() {
+    _counter <= 0
+        ? setState(() {
+          _counter = 0;
+        })
+        : setState(() {
+          _counter--;
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar,
       drawer: _buildDrawer,
-      body: _buildBody,
+      body: _dashboard[_currentIndex],
       bottomNavigationBar: _buildBottomNavigationBar,
     );
   }
@@ -23,6 +61,8 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
+
+  get _dashboard => [_buildBodyLayout, _buildBody, _buildBodyPage2];
 
   get _buildDrawer {
     return Drawer(
@@ -58,40 +98,131 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  get _buildBodyLayout {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // bool isLand = constraints.maxWidth > constraints.maxHeight;
+        if (constraints.maxWidth < 600) {
+          return _mobile;
+        } else {
+          return _tablet;
+        }
+      },
+    );
+  }
+
+  get _mobile => Column(
+    children: [
+      Expanded(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(5, (index) {
+              return SizedBox(
+                width: 150,
+                height: 200,
+                child: Card(
+                  color: (index + 1) % 2 == 0 ? Colors.grey : Colors.white,
+                  child: Center(child: Text('$index')),
+                ),
+              );
+            }),
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 2,
+        child: ListView(
+          children: List.generate(10, (index) {
+            return Padding(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              child: Card(
+                color: (index + 1) % 2 == 0 ? Colors.grey : Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      CircleAvatar(radius: 30),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 5,
+                        children: [
+                          Text(
+                            'ID: ${index + 1}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Name: Sithy',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text('Class: GE168', style: TextStyle(fontSize: 15)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
+      ),
+    ],
+  );
+
+  get _tablet => Container(
+    height: double.infinity,
+    width: double.infinity,
+    color: Colors.red,
+    child: Icon(Icons.tablet_android, size: 50),
+  );
+
   get _buildBody {
-    return Padding(
-      padding: EdgeInsets.all(34),
+    var textStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+    return Container(
+      width: double.infinity,
+      color: Colors.grey.shade300,
       child: Column(
+        spacing: 50,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Container(
-              width: 500,
-              color: Colors.amber,
-              child: Text('data'),
-            ),
+          Column(
+            children: [
+              Text(
+                'Count number: $_counter',
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Row(
+                spacing: 20,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _counter == 0
+                      ? SizedBox()
+                      : ElevatedButton(
+                        onPressed: descresment,
+                        child: Text('-', style: textStyle),
+                      ),
+                  ElevatedButton(
+                    onPressed: incresment,
+                    child: Text('+', style: textStyle),
+                  ),
+                ],
+              ),
+            ],
           ),
-          Container(color: Colors.amber, child: Text('data')),
-          Container(color: Colors.amber, child: Text('data')),
-          Expanded(
-            flex: 2,
+          InkWell(
+            onTap: changeColor,
             child: Container(
-              width: 500,
-              color: Colors.red,
-              child: Text('data'),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              width: 500,
-              color: Colors.black,
-              child: Text('data'),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              width: 500,
-              color: Colors.blue,
-              child: Text('data'),
+              height: 100,
+              width: 100,
+              color: _changeColor == false ? Colors.amber : Colors.blue,
             ),
           ),
         ],
@@ -99,60 +230,84 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // get _buildBody => SizedBox(
-  //   width: double.infinity,
-  //   child: Stack(
-  //     alignment: Alignment.center,
-  //     children: [
-  //       Positioned(
-  //         bottom: 80,
-  //         right: 20,
-  //         child: Container(
-  //           height: 200,
-  //           width: 200,
-  //           decoration: BoxDecoration(
-  //             image: DecorationImage(
-  //               image: NetworkImage(
-  //                 'https://image-processor-storage.s3.us-west-2.amazonaws.com/images/866759932dc5358cee86f6552d1250f2/inside-bubble-spheres.jpg',
-  //               ),
-  //               fit: BoxFit.cover,
-  //             ),
-  //             borderRadius: BorderRadius.only(
-  //               topRight: Radius.circular(80),
-  //               bottomLeft: Radius.circular(80),
-  //             ),
-  //             gradient: LinearGradient(
-  //               colors: [Colors.amber, Colors.red, Colors.blue],
-  //               begin: Alignment.topRight,
-  //               end: Alignment.bottomLeft,
-  //             ),
-  //             boxShadow: [
-  //               BoxShadow(
-  //                 color: Colors.cyanAccent,
-  //                 spreadRadius: 10,
-  //                 blurRadius: 60,
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //       Positioned(
-  //         bottom: 20,
-  //         child: Container(color: Colors.amber, height: 68, width: 70),
-  //       ),
-  //     ],
-  //   ),
-  // );
+  get _buildBodyPage2 {
+    var textStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Counter Value: $_counter',
+            style: textStyle.copyWith(fontSize: 30),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: _counter > 0 ? descresment : null,
+                style: ElevatedButton.styleFrom(
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(16),
+                ),
+                child: Icon(Icons.remove, color: Colors.white),
+              ),
+              SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: incresment,
+                style: ElevatedButton.styleFrom(
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(16),
+                ),
+                child: Icon(Icons.add, color: Colors.white),
+              ),
+            ],
+          ),
+          SizedBox(height: 40),
+          GestureDetector(
+            onTap: changeColor,
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                color: _changeColor ? Colors.blue : Colors.amber,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   get _buildBottomNavigationBar => BottomNavigationBar(
     items: [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
-        label: 'Home',
         activeIcon: Icon(Icons.home_repair_service),
+        label: 'Home',
       ),
-      BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
       BottomNavigationBarItem(icon: Icon(Icons.mode), label: 'Mode'),
+      BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
     ],
+    currentIndex: _currentIndex,
+    onTap: (index) {
+      setCurrentIndex(index);
+    },
   );
 }
