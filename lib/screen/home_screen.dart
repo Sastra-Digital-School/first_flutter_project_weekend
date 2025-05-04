@@ -58,43 +58,91 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  get _buildBody => Column(
-    children: [
-      Row(
+  get _buildBody {
+    return Padding(
+      padding: EdgeInsets.all(34),
+      child: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(50),
-            margin: EdgeInsets.only(top: 50),
-            color: Colors.yellow,
-            child: Text(
-              'Home',
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+          Expanded(
+            child: Container(
+              width: 500,
+              color: Colors.amber,
+              child: Text('data'),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(50),
-            margin: EdgeInsets.only(top: 50),
-            color: Colors.red,
-            child: Text(
-              'Home',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+          Container(color: Colors.amber, child: Text('data')),
+          Container(color: Colors.amber, child: Text('data')),
+          Expanded(
+            flex: 2,
+            child: Container(
+              width: 500,
+              color: Colors.red,
+              child: Text('data'),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: 500,
+              color: Colors.black,
+              child: Text('data'),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: 500,
+              color: Colors.blue,
+              child: Text('data'),
             ),
           ),
         ],
       ),
-      ElevatedButton(onPressed: () {}, child: Text('Button')),
-      OutlinedButton(onPressed: () {}, child: Text('data')),
-      IconButton(onPressed: () {}, icon: Icon(Icons.access_alarm)),
-    ],
-  );
+    );
+  }
+
+  // get _buildBody => SizedBox(
+  //   width: double.infinity,
+  //   child: Stack(
+  //     alignment: Alignment.center,
+  //     children: [
+  //       Positioned(
+  //         bottom: 80,
+  //         right: 20,
+  //         child: Container(
+  //           height: 200,
+  //           width: 200,
+  //           decoration: BoxDecoration(
+  //             image: DecorationImage(
+  //               image: NetworkImage(
+  //                 'https://image-processor-storage.s3.us-west-2.amazonaws.com/images/866759932dc5358cee86f6552d1250f2/inside-bubble-spheres.jpg',
+  //               ),
+  //               fit: BoxFit.cover,
+  //             ),
+  //             borderRadius: BorderRadius.only(
+  //               topRight: Radius.circular(80),
+  //               bottomLeft: Radius.circular(80),
+  //             ),
+  //             gradient: LinearGradient(
+  //               colors: [Colors.amber, Colors.red, Colors.blue],
+  //               begin: Alignment.topRight,
+  //               end: Alignment.bottomLeft,
+  //             ),
+  //             boxShadow: [
+  //               BoxShadow(
+  //                 color: Colors.cyanAccent,
+  //                 spreadRadius: 10,
+  //                 blurRadius: 60,
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       Positioned(
+  //         bottom: 20,
+  //         child: Container(color: Colors.amber, height: 68, width: 70),
+  //       ),
+  //     ],
+  //   ),
+  // );
 
   get _buildBottomNavigationBar => BottomNavigationBar(
     items: [
