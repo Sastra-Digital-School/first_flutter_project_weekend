@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _changeColor = !_changeColor;
     });
-    print(_changeColor);
   }
 
   void incresment() {
