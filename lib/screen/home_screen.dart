@@ -1,3 +1,5 @@
+import 'package:first_project/widgets/card_por.dart';
+import 'package:first_project/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -110,71 +112,45 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  get _mobile => Column(
-    children: [
-      Expanded(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(5, (index) {
-              return SizedBox(
-                width: 150,
-                height: 200,
-                child: Card(
-                  color: (index + 1) % 2 == 0 ? Colors.grey : Colors.white,
-                  child: Center(child: Text('$index')),
-                ),
+  get _mobile {
+    List<String> name = ['Sithy', 'Vuthy', 'Dara', 'Visal', 'Sokha'];
+
+    List<String> photo = [
+      'https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fcom.ft.imagepublish.upp-prod-eu.s3.amazonaws.com%2F75a4a8f4-3874-11ea-ac3c-f68c10993b04?source=next-article&fit=scale-down&quality=highest&width=700&dpr=1',
+      'https://plus.unsplash.com/premium_photo-1682091992663-2e4f4a5534ba?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFsZSUyMHN0dWRlbnR8ZW58MHx8MHx8fDA%3D',
+      'https://thumbs.dreamstime.com/b/male-student-working-desk-chinese-school-26363958.jpg',
+      'https://as1.ftcdn.net/jpg/02/57/07/40/1000_F_257074046_HnOJVuJxaTnk9rCOatQjZcmpEd48lNjs.jpg',
+      'https://www.universityofcalifornia.edu/sites/default/files/styles/feature_banner_image/public/2022-01/2018_03_12_UCR_day1_post-79.jpg?h=0c170278&itok=6dn4jQxG',
+    ];
+
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(photo.length, (i) {
+                return CardPor(index: i, image: photo[i], name: name[i]);
+              }),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: ListView(
+            children: List.generate(name.length, (index) {
+              return CardWidget(
+                index: index,
+                name: name[index],
+                className: 'SDSG2',
+                image: photo[index],
               );
             }),
           ),
         ),
-      ),
-      Expanded(
-        flex: 2,
-        child: ListView(
-          children: List.generate(10, (index) {
-            return Padding(
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Card(
-                color: (index + 1) % 2 == 0 ? Colors.grey : Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Row(
-                    spacing: 10,
-                    children: [
-                      CircleAvatar(radius: 30),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 5,
-                        children: [
-                          Text(
-                            'ID: ${index + 1}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Name: Sithy',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text('Class: GE168', style: TextStyle(fontSize: 15)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
-        ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 
   get _tablet => Container(
     height: double.infinity,
