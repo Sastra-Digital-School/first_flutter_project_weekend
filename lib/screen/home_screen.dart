@@ -1,5 +1,6 @@
 import 'package:first_project/widgets/card_por.dart';
 import 'package:first_project/widgets/card_widget.dart';
+import 'package:first_project/widgets/new_feed_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,28 +43,66 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
+  List<String> tabBarTitle = ['Student List', 'New Feed', 'Video'];
+
+  List<String> photo = [
+    'https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fcom.ft.imagepublish.upp-prod-eu.s3.amazonaws.com%2F75a4a8f4-3874-11ea-ac3c-f68c10993b04?source=next-article&fit=scale-down&quality=highest&width=700&dpr=1',
+    'https://plus.unsplash.com/premium_photo-1682091992663-2e4f4a5534ba?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFsZSUyMHN0dWRlbnR8ZW58MHx8MHx8fDA%3D',
+    'https://thumbs.dreamstime.com/b/male-student-working-desk-chinese-school-26363958.jpg',
+    'https://as1.ftcdn.net/jpg/02/57/07/40/1000_F_257074046_HnOJVuJxaTnk9rCOatQjZcmpEd48lNjs.jpg',
+    'https://www.universityofcalifornia.edu/sites/default/files/styles/feature_banner_image/public/2022-01/2018_03_12_UCR_day1_post-79.jpg?h=0c170278&itok=6dn4jQxG',
+  ];
+
+  List<String> name = [
+    'Sithy Chamroeun',
+    'Vuthy Chundee',
+    'Dara Van',
+    'Visal Can',
+    'Sokha Teang',
+  ];
+  List<bool> status = [true, false, true, false, true];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar,
-      drawer: _buildDrawer,
-      body: _dashboard[_currentIndex],
-      bottomNavigationBar: _buildBottomNavigationBar,
+    return DefaultTabController(
+      length: tabBarTitle.length,
+      child: Scaffold(
+        appBar: _buildAppBar,
+        drawer: _buildDrawer,
+        body: _dashboard[_currentIndex],
+        bottomNavigationBar: _buildBottomNavigationBar,
+      ),
     );
   }
 
   get _buildAppBar {
     return AppBar(
-      title: const Text('Home Screen'),
+      // backgroundColor: Colors.cyan[300],
+      title: const Text(
+        'Home Screen',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       actions: [
         IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
         IconButton(onPressed: () {}, icon: Icon(Icons.language)),
         IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
       ],
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: SizedBox(
+          height: 50,
+          child: TabBar(
+            tabs: List.generate(
+              tabBarTitle.length,
+              (index) => Tab(text: tabBarTitle[index]),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
-  get _dashboard => [_buildBodyLayout, _buildBody, _buildBodyPage2];
+  get _dashboard => [_buildBodyLayout, _buildBody, _buildBody, _buildBodyPage2];
 
   get _buildDrawer {
     return Drawer(
@@ -113,16 +152,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   get _mobile {
-    List<String> name = ['Sithy', 'Vuthy', 'Dara', 'Visal', 'Sokha'];
+    return TabBarView(
+      children: [_buildStudentList, _buildNewFeed, _buildVideo],
+    );
+  }
 
-    List<String> photo = [
-      'https://www.ft.com/__origami/service/image/v2/images/raw/http%3A%2F%2Fcom.ft.imagepublish.upp-prod-eu.s3.amazonaws.com%2F75a4a8f4-3874-11ea-ac3c-f68c10993b04?source=next-article&fit=scale-down&quality=highest&width=700&dpr=1',
-      'https://plus.unsplash.com/premium_photo-1682091992663-2e4f4a5534ba?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFsZSUyMHN0dWRlbnR8ZW58MHx8MHx8fDA%3D',
-      'https://thumbs.dreamstime.com/b/male-student-working-desk-chinese-school-26363958.jpg',
-      'https://as1.ftcdn.net/jpg/02/57/07/40/1000_F_257074046_HnOJVuJxaTnk9rCOatQjZcmpEd48lNjs.jpg',
-      'https://www.universityofcalifornia.edu/sites/default/files/styles/feature_banner_image/public/2022-01/2018_03_12_UCR_day1_post-79.jpg?h=0c170278&itok=6dn4jQxG',
-    ];
-
+  get _buildStudentList {
     return Column(
       children: [
         Expanded(
@@ -152,6 +187,30 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  get _buildNewFeed {
+    return ListView.builder(
+      itemCount: photo.length,
+      itemBuilder: (context, index) {
+        return NewFeedCardWidget(
+          profileName: name[index],
+          duration: '${5 + index}min .',
+          profilePhoto: photo[0],
+          photo: photo[index],
+          isPrivate: status[index],
+        );
+      },
+    );
+  }
+
+  get _buildVideo {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: Colors.green,
+      child: Icon(Icons.video_call, size: 50),
+    );
+  }
+
   get _tablet => Container(
     height: double.infinity,
     width: double.infinity,
@@ -160,49 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   get _buildBody {
-    var textStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
-    return Container(
-      width: double.infinity,
-      color: Colors.grey.shade300,
-      child: Column(
-        spacing: 50,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              Text(
-                'Count number: $_counter',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                spacing: 20,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _counter == 0
-                      ? SizedBox()
-                      : ElevatedButton(
-                        onPressed: descresment,
-                        child: Text('-', style: textStyle),
-                      ),
-                  ElevatedButton(
-                    onPressed: incresment,
-                    child: Text('+', style: textStyle),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          InkWell(
-            onTap: changeColor,
-            child: Container(
-              height: 100,
-              width: 100,
-              color: _changeColor == false ? Colors.amber : Colors.blue,
-            ),
-          ),
-        ],
-      ),
-    );
+    // var textStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+    // List color = [Colors.amber, Colors.red, Colors.black, Colors.blue];
+    return SizedBox();
   }
 
   get _buildBodyPage2 {
@@ -272,12 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   get _buildBottomNavigationBar => BottomNavigationBar(
     items: [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        activeIcon: Icon(Icons.home_repair_service),
-        label: 'Home',
-      ),
-      BottomNavigationBarItem(icon: Icon(Icons.mode), label: 'Mode'),
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      BottomNavigationBarItem(icon: Icon(Icons.feed_rounded), label: 'Page'),
       BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
     ],
     currentIndex: _currentIndex,

@@ -76,8 +76,8 @@ class CardPor extends StatelessWidget {
           top: 10,
           child: CircleAvatar(
             radius: 15,
-            backgroundColor: Colors.amber,
-            backgroundImage: AssetImage('assets/images/icon.jpg'),
+            backgroundColor: Colors.grey,
+            backgroundImage: AssetImage('assets/images/pin_icon.png'),
           ),
         ),
       ],
