@@ -1,3 +1,4 @@
+import 'package:first_project/screen/notification_screen.dart';
 import 'package:first_project/widgets/card_por.dart';
 import 'package:first_project/widgets/card_widget.dart';
 import 'package:first_project/widgets/new_feed_card_widget.dart';
@@ -52,6 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
     'https://as1.ftcdn.net/jpg/02/57/07/40/1000_F_257074046_HnOJVuJxaTnk9rCOatQjZcmpEd48lNjs.jpg',
     'https://www.universityofcalifornia.edu/sites/default/files/styles/feature_banner_image/public/2022-01/2018_03_12_UCR_day1_post-79.jpg?h=0c170278&itok=6dn4jQxG',
   ];
+  List<String> videoImage = [
+    'https://images.pexels.com/videos/5512609/pexels-photo-5512609.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://www.shutterstock.com/shutterstock/videos/3744213623/thumb/1.jpg?ip=x480',
+  ];
 
   List<String> name = [
     'Sithy Chamroeun',
@@ -61,6 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
     'Sokha Teang',
   ];
   List<bool> status = [true, false, true, false, true];
+
+  List<String> title = ['Like', 'Comment', 'Share', ''];
+
+  List icon = [
+    Icons.favorite,
+    Icons.comment,
+    Icons.share,
+    Icons.more_horiz_rounded,
+  ];
+  List numberEng = ['6K', '86', '1.3K', ''];
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +100,22 @@ class _HomeScreenState extends State<HomeScreen> {
       actions: [
         IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
         IconButton(onPressed: () {}, icon: Icon(Icons.language)),
-        IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
+        IconButton(
+          onPressed: () async {
+            final result = await Navigator.of(context).push(
+              MaterialPageRoute(
+                builder:
+                    (context) => NotificationScreen(
+                      id: '168',
+                      title: 'Notification Screen Fake',
+                      filterLength: 1,
+                    ),
+              ),
+            );
+            debugPrint(result);
+          },
+          icon: Icon(Icons.notifications),
+        ),
       ],
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(50),
@@ -203,11 +233,101 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   get _buildVideo {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      color: Colors.green,
-      child: Icon(Icons.video_call, size: 50),
+    return PageView.builder(
+      itemCount: videoImage.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return Stack(
+          children: [
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(videoImage[index]),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Row(
+                spacing: 20,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 18,
+                    child: Icon(Icons.skip_previous_rounded),
+                  ),
+                  CircleAvatar(
+                    radius: 25,
+                    child: Icon(Icons.play_arrow_rounded),
+                  ),
+                  CircleAvatar(
+                    radius: 18,
+                    child: Icon(Icons.skip_next_rounded),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 20,
+              left: 20,
+              child: Row(
+                children: [
+                  Text(
+                    'Video',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 20,
+              right: 20,
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.search, color: Colors.white, size: 30),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.person, color: Colors.white, size: 30),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 20,
+              child: Column(
+                spacing: 15,
+                children: List.generate(
+                  icon.length,
+                  (index) => Column(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(icon[index], color: Colors.white, size: 33),
+                      ),
+                      Text(
+                        numberEng[index],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
