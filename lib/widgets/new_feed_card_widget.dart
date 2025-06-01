@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:first_project/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-class NewFeedCardWidget extends StatelessWidget {
+class NewFeedCardWidget extends StatefulWidget {
   final String profilePhoto;
   final String profileName;
   final String duration;
   final String photo;
   final bool? isPrivate;
+  final void Function(int, bool)? onTap;
+  final bool isLiked;
 
   const NewFeedCardWidget({
     super.key,
@@ -15,7 +18,28 @@ class NewFeedCardWidget extends StatelessWidget {
     required this.duration,
     required this.photo,
     this.isPrivate,
+    this.isLiked = false,
+    this.onTap,
   });
+
+  @override
+  State<NewFeedCardWidget> createState() => _NewFeedCardWidgetState();
+}
+
+class _NewFeedCardWidgetState extends State<NewFeedCardWidget> {
+  bool _isLiked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLiked = widget.isLiked;
+  }
+
+  @override
+  void didUpdateWidget(covariant NewFeedCardWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _isLiked = widget.isLiked;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +67,7 @@ class NewFeedCardWidget extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 22,
-                backgroundImage: NetworkImage(profilePhoto),
+                backgroundImage: NetworkImage(widget.profilePhoto),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +76,7 @@ class NewFeedCardWidget extends StatelessWidget {
                     spacing: 5,
                     children: [
                       Text(
-                        profileName,
+                        widget.profileName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -74,7 +98,7 @@ class NewFeedCardWidget extends StatelessWidget {
                     spacing: 5,
                     children: [
                       Text(
-                        duration,
+                        widget.duration,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
@@ -82,7 +106,7 @@ class NewFeedCardWidget extends StatelessWidget {
                         ),
                       ),
                       Icon(
-                        isPrivate == true ? Icons.lock : Icons.public,
+                        widget.isPrivate == true ? Icons.lock : Icons.public,
                         size: 15,
                         color: Colors.grey.shade600,
                       ),
@@ -96,7 +120,7 @@ class NewFeedCardWidget extends StatelessWidget {
             ],
           ),
           CachedNetworkImage(
-            imageUrl: photo,
+            imageUrl: widget.photo,
             placeholder:
                 (context, url) => Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) => Icon(Icons.error),
@@ -125,16 +149,37 @@ class NewFeedCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(3, (index) {
               List<String> title = ['Like', 'Comment', 'Share'];
-              List icon = [Icons.favorite, Icons.comment, Icons.share];
-              return Row(
-                spacing: 8,
-                children: [
-                  Icon(icon[index], size: 20, color: Colors.grey.shade600),
-                  Text(
-                    title[index],
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                ],
+              List iconSelected = [Icons.favorite, Icons.comment, Icons.share];
+              List icon = [Icons.favorite_border, Icons.comment, Icons.share];
+              return GestureDetector(
+                onTap: () {
+                  // if (index == 0) {
+                  //   setState(() {
+                  //     _isLiked = !_isLiked;
+                  //   });
+                  // }
+                  widget.onTap!(index, _isLiked);
+                },
+                child: Row(
+                  spacing: 8,
+                  children: [
+                    Icon(
+                      _isLiked && index == 0
+                          ? iconSelected[index]
+                          : icon[index],
+                      size: 20,
+                      color:
+                          _isLiked && index == 0
+                              ? Colors.red
+                              : Colors.grey.shade600,
+                    ),
+                    Text(
+                      title[index],
+                      // style: TextStyle(color: Colors.grey.shade600),
+                      style: AppTextStyle.regular12(),
+                    ),
+                  ],
+                ),
               );
             }),
           ),

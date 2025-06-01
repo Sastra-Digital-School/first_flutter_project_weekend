@@ -1,4 +1,4 @@
-import 'package:first_project/screen/notification_screen.dart';
+import 'package:first_project/modules/screen/notification_screen.dart';
 import 'package:first_project/widgets/card_por.dart';
 import 'package:first_project/widgets/card_widget.dart';
 import 'package:first_project/widgets/new_feed_card_widget.dart';
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         IconButton(onPressed: () {}, icon: Icon(Icons.language)),
         IconButton(
           onPressed: () async {
-            final result = await Navigator.of(context).push(
+            await Navigator.of(context).push(
               MaterialPageRoute(
                 builder:
                     (context) => NotificationScreen(
@@ -112,7 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
               ),
             );
-            debugPrint(result);
           },
           icon: Icon(Icons.notifications),
         ),
