@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: RouteView.home.name,
+      initialRoute: RouteView.main.name,
       getPages: AppRouting.route,
     );
   }

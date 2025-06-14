@@ -129,4 +129,22 @@ class Datas {
       },
     },
   };
+
+  static var imageBackgroundData = [
+    {
+      'name': 'Stunning',
+      'image':
+          'https://images.unsplash.com/photo-1506744038136-46273834b3fb?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGFuZHNjYXBlfGVufDB8fDB8fHww',
+    },
+
+    {
+      'name': 'Switzerland Mountains',
+      'image': 'https://storage.googleapis.com/pod_public/1300/126540.jpg',
+    },
+    {
+      'name': 'Switzerland',
+      'image':
+          'https://switzerland-tour.com/storage/media/4-ForArticles/swiss-mountains.jpg',
+    },
+  ];
 }

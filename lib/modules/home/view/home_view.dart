@@ -1,3 +1,8 @@
+// import 'package:first_project/core/data/data.dart';
+// import 'package:first_project/widgets/destination_card.dart';
+// import 'package:get/get.dart';
+// import 'package:stacked_card_carousel/stacked_card_carousel.dart';
+import 'package:first_project/widgets/slide_view_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -5,11 +10,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar,
-      body: _buildBody,
-      bottomNavigationBar: _buildBottomNavigationBar,
-    );
+    return Scaffold(appBar: _buildAppBar, body: _buildBody);
   }
 
   get _buildAppBar {
@@ -57,7 +58,6 @@ class HomeView extends StatelessWidget {
 
   get _buildBody {
     List<String> categoriesList = ['Asia', 'Europe', 'Africa', 'America'];
-
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -91,38 +91,22 @@ class HomeView extends StatelessWidget {
               );
             }),
           ),
-          Expanded(
-            child: Container(
-              height: 300,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(25),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   child: StackedCardCarousel(
+          //     type: StackedCardCarouselType.cardsStack,
+          //     initialOffset: 0,
+          //     spaceBetweenItems: 468,
+          //     pageController: PageController(initialPage: 3),
+          //     items: List.generate(
+          //       3,
+          //       (index) => CardWidget(
+          //         imageUrl: Datas.imageBackgroundData[index]['image'] ?? '',
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          Expanded(child: StackPageViewWidget()),
         ],
-      ),
-    );
-  }
-
-  get _buildBottomNavigationBar {
-    return Container(
-      margin: EdgeInsets.all(20),
-      height: 80,
-      decoration: BoxDecoration(
-        color: Colors.black87,
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Row(
-        children: List.generate(4, (index) {
-          return Expanded(
-            child: CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.white,
-              child: Icon(Icons.home),
-            ),
-          );
-        }),
       ),
     );
   }
