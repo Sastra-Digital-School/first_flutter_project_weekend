@@ -3,26 +3,18 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:get/get.dart';
+import 'package:first_project/config/theme/app_theme.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-// extension ListSpaceBetweenExtension on List<Widget> {
-//   List<Widget> withSpaceBetween({double? width, double? height}) => [
-//     /*************  ✨ Windsurf Command ⭐  *************/
-//     /// Insert space between each widget in this list.
-//     ///
-//     /// The space is inserted above and to the left of each widget, except for the
-//     /// first one. The space is created using [SizedBox] with the given
-//     /// [width] and [height].
-//     ///
-//     /// Example:
-//     ///
-//     ///
-//     /*******  db9408d4-4c5b-4e02-91d8-ccbdf927bc21  *******/
-//     for (int i = 0; i < length; i++) ...[
-//       if (i > 0) SizedBox(width: width, height: height),
-//       this[i],
-//     ],
-//   ];
-// }
+extension ListSpaceBetweenExtension on List<Widget> {
+  List<Widget> withSpaceBetween({double? width, double? height}) => [
+    for (int i = 0; i < length; i++) ...[
+      if (i > 0) SizedBox(width: width, height: height),
+      this[i],
+    ],
+  ];
+}
 
 // void processAlert({required String message, required void Function() onTap}) {
 //   Get.dialog(
@@ -89,10 +81,6 @@
 //     ),
 //   );
 // }
-
-import 'package:first_project/config/theme/app_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 void notificationAlert(String message) {
   Get.rawSnackbar(

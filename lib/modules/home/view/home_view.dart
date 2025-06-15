@@ -2,6 +2,7 @@
 // import 'package:first_project/widgets/destination_card.dart';
 // import 'package:get/get.dart';
 // import 'package:stacked_card_carousel/stacked_card_carousel.dart';
+import 'package:first_project/config/router/app_routes.dart';
 import 'package:first_project/widgets/slide_view_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -105,7 +106,14 @@ class HomeView extends StatelessWidget {
           //     ),
           //   ),
           // ),
-          Expanded(child: StackPageViewWidget()),
+          Expanded(
+            child: StackPageViewWidget(
+              onSubmit: () {
+                RouteView.detail.go();
+                return null;
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -45,7 +45,11 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
                         backgroundColor: Colors.white,
                         child: Icon(icons[index]),
                       )
-                      : Icon(icons[index], color: Colors.white),
+                      : CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.transparent,
+                        child: Icon(icons[index], color: Colors.white),
+                      ),
             ),
           );
         }),

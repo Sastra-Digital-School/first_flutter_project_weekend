@@ -333,4 +333,80 @@ class AppTextStyle {
       color: color ?? AppColors.white,
     );
   }
+
+  static TextStyle bold14({
+    Color? color,
+    double? height,
+    String? fontFamily,
+    bool? underline,
+  }) {
+    return TextStyle(
+      height: height,
+      fontFamily:
+          fontFamily ??
+          (Get.locale == const Locale('en', 'US')
+              ? 'SourceSansPro-Bold'
+              : 'Battambang-Bold'),
+      fontWeight: FontWeight.bold,
+      fontSize: Get.locale == const Locale('en', 'US') ? 14 : 14,
+      color: color ?? AppColors.white,
+      decoration: underline == true ? TextDecoration.underline : null,
+    );
+  }
+
+  static TextStyle bold16({Color? color, double? height, String? fontFamily}) {
+    return TextStyle(
+      height: height,
+      fontFamily:
+          fontFamily ??
+          (Get.locale == const Locale('en', 'US')
+              ? 'SourceSansPro-Bold'
+              : 'Battambang-Bold'),
+      fontWeight: FontWeight.bold,
+      fontSize: Get.locale == const Locale('en', 'US') ? 14 : 14,
+      color: color ?? AppColors.white,
+    );
+  }
+
+  static TextStyle bold18({Color? color, double? height, String? fontFamily}) {
+    return TextStyle(
+      height: height,
+      fontFamily:
+          fontFamily ??
+          (Get.locale == const Locale('en', 'US')
+              ? 'SourceSansPro-Bold'
+              : 'Battambang-Bold'),
+      fontWeight: FontWeight.bold,
+      fontSize: Get.locale == const Locale('en', 'US') ? 18 : 18,
+      color: color ?? AppColors.white,
+    );
+  }
+
+  static TextStyle bold20({Color? color, double? height, String? fontFamily}) {
+    return TextStyle(
+      height: height,
+      fontFamily:
+          fontFamily ??
+          (Get.locale == const Locale('en', 'US')
+              ? 'SourceSansPro-Bold'
+              : 'Battambang-Bold'),
+      fontWeight: FontWeight.bold,
+      fontSize: Get.locale == const Locale('en', 'US') ? 20 : 20,
+      color: color ?? AppColors.white,
+    );
+  }
+
+  static TextStyle bold25({Color? color, double? height, String? fontFamily}) {
+    return TextStyle(
+      height: height,
+      fontFamily:
+          fontFamily ??
+          (Get.locale == const Locale('en', 'US')
+              ? 'SourceSansPro-Bold'
+              : 'Battambang-Bold'),
+      fontWeight: FontWeight.bold,
+      fontSize: Get.locale == const Locale('en', 'US') ? 25 : 25,
+      color: color ?? AppColors.white,
+    );
+  }
 }
