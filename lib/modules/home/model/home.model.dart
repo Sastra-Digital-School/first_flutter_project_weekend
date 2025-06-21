@@ -5,3 +5,6 @@ class HomeModel {
 
   HomeModel({this.id, this.title, this.image});
 }
+
+
+

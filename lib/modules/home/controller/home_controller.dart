@@ -1,4 +1,7 @@
+import 'package:first_project/modules/home/model/product_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   final _count = 0.obs;
@@ -31,5 +34,30 @@ class HomeController extends GetxController {
   void setLike(int index) {
     islikeList[index].value = !islikeList[index].value;
     update();
+  }
+
+  var productModel = ProductModel().obs;
+
+  var isLoading = true.obs;
+
+  Future<void> fetchDataFromAPi() async {
+    try {
+      isLoading.value = true;
+      var url = Uri.https('dummyjson.com', '/products');
+
+      var response = await http.get(url);
+
+      productModel.value = productModelFromJson(response.body);
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    await fetchDataFromAPi();
   }
 }

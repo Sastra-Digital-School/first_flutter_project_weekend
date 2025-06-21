@@ -3,10 +3,12 @@
 // import 'package:get/get.dart';
 // import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 import 'package:first_project/config/router/app_routes.dart';
+import 'package:first_project/modules/home/controller/home_controller.dart';
 import 'package:first_project/widgets/slide_view_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
   @override
@@ -59,6 +61,7 @@ class HomeView extends StatelessWidget {
 
   get _buildBody {
     List<String> categoriesList = ['Asia', 'Europe', 'Africa', 'America'];
+    // final List<String> title = ['Rio de Janeiro', 'Paris', 'Tokyo', 'New York'];
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -107,11 +110,21 @@ class HomeView extends StatelessWidget {
           //   ),
           // ),
           Expanded(
-            child: StackPageViewWidget(
-              onSubmit: () {
-                RouteView.detail.go();
-                return null;
-              },
+            child: Obx(
+              () =>
+                  controller.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : StackPageViewWidget(
+                        title:
+                            controller.productModel.value.products
+                                ?.map((e) => e.title)
+                                .toList() ??
+                            [],
+                        onSubmit: () {
+                          RouteView.detail.go();
+                          return null;
+                        },
+                      ),
             ),
           ),
         ],

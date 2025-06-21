@@ -3,20 +3,14 @@ import 'package:flutter/material.dart';
 
 class StackPageViewWidget extends StatefulWidget {
   final Future<dynamic>? Function()? onSubmit;
-  const StackPageViewWidget({super.key, this.onSubmit});
+  final List<String?> title;
+  const StackPageViewWidget({super.key, this.onSubmit, required this.title});
 
   @override
   State<StackPageViewWidget> createState() => _StackPageViewWidgetState();
 }
 
 class _StackPageViewWidgetState extends State<StackPageViewWidget> {
-  final List<String> destinations = [
-    'Rio de Janeiro',
-    'Paris',
-    'Tokyo',
-    'New York',
-  ];
-
   final PageController _controller = PageController(
     viewportFraction: 0.75,
     initialPage: 5,
@@ -39,7 +33,7 @@ class _StackPageViewWidgetState extends State<StackPageViewWidget> {
     final List<int> renderOrder = [];
 
     // Cards before current
-    for (int i = 0; i < destinations.length; i++) {
+    for (int i = 0; i < 5; i++) {
       if (i != currentIndex) renderOrder.add(i);
     }
     // Add current card last so it's on top
@@ -55,7 +49,7 @@ class _StackPageViewWidgetState extends State<StackPageViewWidget> {
           PageView.builder(
             reverse: true,
             controller: _controller,
-            itemCount: destinations.length,
+            itemCount: 5,
             itemBuilder: (_, __) => SizedBox.shrink(),
           ),
 
@@ -72,7 +66,7 @@ class _StackPageViewWidgetState extends State<StackPageViewWidget> {
                 child: Transform.scale(
                   scale: scale,
                   child: DestinationCard(
-                    title: destinations[index],
+                    title: widget.title[index] ?? '',
                     country: 'Brazil',
                     rating: 5.0,
                     reviews: 143,
