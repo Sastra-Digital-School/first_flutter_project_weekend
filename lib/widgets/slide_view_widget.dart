@@ -2,9 +2,16 @@ import 'package:first_project/widgets/slide_to_act_widget.dart';
 import 'package:flutter/material.dart';
 
 class StackPageViewWidget extends StatefulWidget {
-  final Future<dynamic>? Function()? onSubmit;
+  final Future<dynamic>? Function(int?) onSubmit;
   final List<String?> title;
-  const StackPageViewWidget({super.key, this.onSubmit, required this.title});
+  final List<int?> id;
+
+  const StackPageViewWidget({
+    super.key,
+    required this.onSubmit,
+    required this.title,
+    required this.id,
+  });
 
   @override
   State<StackPageViewWidget> createState() => _StackPageViewWidgetState();
@@ -72,7 +79,9 @@ class _StackPageViewWidgetState extends State<StackPageViewWidget> {
                     reviews: 143,
                     imageUrl:
                         'https://picsum.photos/id/${index + 1011}/600/400',
-                    onSubmit: widget.onSubmit,
+                    onSubmit: () async {
+                      widget.onSubmit(widget.id[index]);
+                    },
                   ),
                 ),
               ),

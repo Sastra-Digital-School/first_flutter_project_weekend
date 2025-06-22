@@ -120,8 +120,15 @@ class HomeView extends GetView<HomeController> {
                                 ?.map((e) => e.title)
                                 .toList() ??
                             [],
-                        onSubmit: () {
-                          RouteView.detail.go();
+                        id:
+                            controller.productModel.value.products
+                                ?.map((e) => e.id)
+                                .toList() ??
+                            [],
+                        onSubmit: (id) {
+                          RouteView.detail.go(
+                            parameters: {'id': id.toString()},
+                          );
                           return null;
                         },
                       ),

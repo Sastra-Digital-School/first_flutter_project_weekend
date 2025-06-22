@@ -5,15 +5,19 @@ import 'package:first_project/modules/detail_screen/controller/detail_controller
 import 'package:first_project/widgets/card_detail_page_view_widget.dart';
 import 'package:first_project/widgets/text_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 
 class DetailView extends GetView<DetailController> {
   const DetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _buildAppBar, body: _buildBody);
+    return Obx(
+      () =>
+          controller.isLoading.value
+              ? Scaffold(body: Center(child: CircularProgressIndicator()))
+              : Scaffold(appBar: _buildAppBar, body: _buildBody),
+    );
   }
 
   get _buildAppBar {
@@ -82,73 +86,91 @@ class DetailView extends GetView<DetailController> {
   }
 
   get _buildBody {
+    var data = controller.product.value;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            spacing: 10,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Rio de Janeiro',
-                    style: AppTextStyle.bold25(color: Colors.black),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade500, width: 1),
-                      borderRadius: BorderRadius.circular(50),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              spacing: 10,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: Get.width * 0.6,
+                      child: Text(
+                        data.title ?? '',
+                        style: AppTextStyle.bold25(color: Colors.black),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                    child: Row(
-                      children: [Icon(Icons.star_border_rounded), Text('5.0')],
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey.shade500,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 2,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.star_border_rounded),
+                          Text('5.0'),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Brazil', style: AppTextStyle.regular15()),
-                  TextButtonWidget(title: '143 reviews'),
-                ],
-              ),
-            ],
-          ),
-          Text(
-            'Rio de Janeiro, often simply called Rio, is the second-most populous city in Brazil, after São Paulo.',
-            style: AppTextStyle.regular15(),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          TextButtonWidget(title: 'Read more'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Upcoming tours',
-                style: AppTextStyle.bold20(color: Colors.black),
-              ),
-              TextButtonWidget(title: 'See all'),
-            ],
-          ),
-          Expanded(
-            child: PageView.builder(
-              clipBehavior: Clip.none,
-              itemCount: 2,
-              controller: PageController(viewportFraction: 0.95),
-              itemBuilder: (context, index) {
-                return CardDetailPageViewWidget(
-                  imageurl: 'https://picsum.photos/id/${index + 1011}/600/400',
-                );
-              },
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Brazil', style: AppTextStyle.regular15()),
+                    TextButtonWidget(title: '143 reviews'),
+                  ],
+                ),
+              ],
             ),
-          ),
-        ].withSpaceBetween(height: 20),
+            Text(
+              data.description ?? '',
+              style: AppTextStyle.regular15(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            TextButtonWidget(title: 'Read more'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Upcoming tours',
+                  style: AppTextStyle.bold20(color: Colors.black),
+                ),
+                TextButtonWidget(title: 'See all'),
+              ],
+            ),
+            SizedBox(
+              height: 368,
+              child: PageView.builder(
+                clipBehavior: Clip.none,
+                itemCount: 2,
+                controller: PageController(viewportFraction: 0.95),
+                itemBuilder: (context, index) {
+                  return CardDetailPageViewWidget(
+                    imageurl:
+                        'https://picsum.photos/id/${index + 1011}/600/400',
+                  );
+                },
+              ),
+            ),
+          ].withSpaceBetween(height: 20),
+        ),
       ),
     );
   }

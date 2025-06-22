@@ -23,7 +23,7 @@ class AppRouting {
             return GetPage(
               name: "/${e.name}",
               page: () => HomeView(),
-              binding: HomeBinding(),
+              binding: InitBinding(),
               transition: Transition.noTransition,
             );
           case RouteView.detail:

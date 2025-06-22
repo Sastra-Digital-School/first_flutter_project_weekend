@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:first_project/modules/home/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,16 +40,29 @@ class HomeController extends GetxController {
 
   var productModel = ProductModel().obs;
 
+  var product = Product().obs;
+
   var isLoading = true.obs;
 
-  Future<void> fetchDataFromAPi() async {
+  Future<void> fetchDataFromAPi({String? id}) async {
     try {
       isLoading.value = true;
-      var url = Uri.https('dummyjson.com', '/products');
+
+      Uri url;
+
+      if (id == null) {
+        url = Uri.https('dummyjson.com', '/products');
+      } else {
+        url = Uri.https('dummyjson.com', '/products/$id');
+      }
 
       var response = await http.get(url);
 
-      productModel.value = productModelFromJson(response.body);
+      if (id == null) {
+        productModel.value = productModelFromJson(response.body);
+      } else {
+        product.value = Product.fromJson(jsonDecode(response.body));
+      }
     } catch (e) {
       debugPrint(e.toString());
     } finally {
