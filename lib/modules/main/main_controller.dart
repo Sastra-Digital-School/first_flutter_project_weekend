@@ -1,4 +1,4 @@
-import 'package:first_project/modules/home/view/home_view.dart';
+import 'package:first_project/modules/home/controller/home_controller.dart';
 import 'package:first_project/modules/menu/view/menu_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -12,5 +12,5 @@ class MainController extends GetxController {
     _currentIndex.value = index;
   }
 
-  var pageList = [HomeView(), MenuScreen(), SizedBox(), SizedBox()].obs;
+  var pageList = [HomeResponesive(), MenuScreen(), SizedBox(), SizedBox()].obs;
 }

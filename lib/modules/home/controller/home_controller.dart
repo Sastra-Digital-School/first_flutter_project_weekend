@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:first_project/config/responsive/main_responsive.dart';
 import 'package:first_project/modules/home/model/product_model.dart';
+import 'package:first_project/modules/home/view/home_view_medium.dart';
+import 'package:first_project/modules/home/view/home_view_small.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -74,5 +77,23 @@ class HomeController extends GetxController {
   void onInit() async {
     super.onInit();
     await fetchDataFromAPi();
+  }
+}
+
+class HomeResponesive extends StatefulWidget {
+  const HomeResponesive({super.key});
+
+  @override
+  State<HomeResponesive> createState() => _HomeResponesiveState();
+}
+
+class _HomeResponesiveState extends State<HomeResponesive> {
+  @override
+  Widget build(BuildContext context) {
+    return MainResponsiveScreenUtil(
+      small: HomeViewSmall(),
+      medium: HomeViewMedium(),
+      large: Container(),
+    );
   }
 }

@@ -6,10 +6,11 @@ import 'package:first_project/config/router/app_routes.dart';
 import 'package:first_project/modules/home/controller/home_controller.dart';
 import 'package:first_project/widgets/slide_view_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+class HomeViewMedium extends GetView<HomeController> {
+  const HomeViewMedium({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class HomeView extends GetView<HomeController> {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Hello, Vanessa'),
+          Text('Hello, Vanessa on Tablet'),
           Text(
             'Welcome to TripGride',
             style: TextStyle(color: Colors.grey, fontSize: 12),
@@ -72,7 +73,7 @@ class HomeView extends GetView<HomeController> {
           Text(
             'Select your next trip',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 28.sp,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),

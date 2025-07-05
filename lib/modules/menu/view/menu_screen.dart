@@ -29,7 +29,7 @@ class MenuScreen extends GetView<MenusController> {
       itemBuilder: (context, index) {
         return Container(
           padding: EdgeInsets.all(16),
-          margin: EdgeInsets.all(16),
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             boxShadow: [BoxShadow(color: Colors.grey.withValues(alpha: 0.2))],

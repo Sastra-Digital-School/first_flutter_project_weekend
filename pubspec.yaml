@@ -42,6 +42,7 @@ dependencies:
   shared_preferences: ^2.5.3
   stacked_card_carousel: ^0.0.4
   slide_to_act: ^2.0.2
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
