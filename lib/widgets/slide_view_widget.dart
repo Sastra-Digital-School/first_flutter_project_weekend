@@ -1,4 +1,3 @@
-import 'package:first_project/widgets/slide_to_act_widget.dart';
 import 'package:flutter/material.dart';
 
 class StackPageViewWidget extends StatefulWidget {
@@ -48,46 +47,51 @@ class _StackPageViewWidgetState extends State<StackPageViewWidget> {
 
     return Scaffold(
       backgroundColor: const Color(0xfff4f6f8),
-      body: Stack(
-        alignment: Alignment.center,
-        clipBehavior: Clip.none,
-        children: [
-          // 1. Scrollable PageView (transparent)
-          PageView.builder(
-            reverse: true,
-            controller: _controller,
-            itemCount: 5,
-            itemBuilder: (_, __) => SizedBox.shrink(),
-          ),
+      body: GestureDetector(
+        onTap: () {
+          widget.onSubmit(widget.id[currentIndex]);
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            // 1. Scrollable PageView (transparent)
+            PageView.builder(
+              reverse: true,
+              controller: _controller,
+              itemCount: 5,
+              itemBuilder: (_, __) => SizedBox.shrink(),
+            ),
 
-          // 2. Layered Cards
-          ...renderOrder.map((index) {
-            final double distance = index - _currentPage;
-            final double translateX = -distance * 40;
-            final double scale = 1 - (distance.abs() * 0.1);
+            // 2. Layered Cards
+            ...renderOrder.map((index) {
+              final double distance = index - _currentPage;
+              final double translateX = -distance * 40;
+              final double scale = 1 - (distance.abs() * 0.1);
 
-            return IgnorePointer(
-              ignoring: false,
-              child: Transform.translate(
-                offset: Offset(translateX, 0),
-                child: Transform.scale(
-                  scale: scale,
-                  child: DestinationCard(
-                    title: widget.title[index] ?? '',
-                    country: 'Brazil',
-                    rating: 5.0,
-                    reviews: 143,
-                    imageUrl:
-                        'https://picsum.photos/id/${index + 1011}/600/400',
-                    onSubmit: () async {
-                      widget.onSubmit(widget.id[index]);
-                    },
+              return IgnorePointer(
+                ignoring: true,
+                child: Transform.translate(
+                  offset: Offset(translateX, 0),
+                  child: Transform.scale(
+                    scale: scale,
+                    child: DestinationCard(
+                      title: widget.title[index] ?? '',
+                      country: 'Brazil',
+                      rating: 5.0,
+                      reviews: 143,
+                      imageUrl:
+                          'https://picsum.photos/id/${index + 1011}/600/400',
+                      onSubmit: () async {
+                        widget.onSubmit(widget.id[index]);
+                      },
+                    ),
                   ),
                 ),
-              ),
-            );
-          }),
-        ],
+              );
+            }),
+          ],
+        ),
       ),
     );
   }
@@ -186,27 +190,7 @@ class DestinationCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                SlideToActWidget(onSubmit: onSubmit),
-                // Container(
-                //   padding: const EdgeInsets.symmetric(
-                //     horizontal: 16,
-                //     vertical: 12,
-                //   ),
-                //   decoration: BoxDecoration(
-                //     color: Colors.black.withValues(alpha: 0.6),
-                //     borderRadius: BorderRadius.circular(16),
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: const [
-                //       Text('See more', style: TextStyle(color: Colors.white)),
-                //       CircleAvatar(
-                //         backgroundColor: Colors.white,
-                //         child: Icon(Icons.arrow_forward, color: Colors.black),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                // SlideToActWidget(onSubmit: onSubmit),
               ],
             ),
           ),
