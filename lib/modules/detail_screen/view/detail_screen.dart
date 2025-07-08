@@ -2,13 +2,16 @@ import 'package:first_project/config/function/function.dart';
 import 'package:first_project/config/theme/app_theme.dart';
 import 'package:first_project/core/data/data.dart';
 import 'package:first_project/modules/detail_screen/controller/detail_controller.dart';
+import 'package:first_project/modules/favorite/controller/favorite_controller.dart';
 import 'package:first_project/widgets/card_detail_page_view_widget.dart';
 import 'package:first_project/widgets/text_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailView extends GetView<DetailController> {
-  const DetailView({super.key});
+  final favoriteController = Get.put(FavoriteController());
+
+  DetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +56,23 @@ class DetailView extends GetView<DetailController> {
             Positioned(
               top: 60,
               right: 20,
-              child: InkWell(
-                onTap: () => Get.back(),
-                child: CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.favorite_border_sharp),
-                ),
+              child: GestureDetector(
+                onTap: () {
+                  final product = controller.product.value;
+                  favoriteController.toggleFavorite(product);
+                },
+                child: Obx(() {
+                  final product = controller.product.value;
+                  final isFav = favoriteController.isFavorite(product.id!);
+                  return CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      color: isFav ? Colors.red : Colors.black,
+                    ),
+                  );
+                }),
               ),
             ),
           ],

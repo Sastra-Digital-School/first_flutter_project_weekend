@@ -2,10 +2,10 @@
 
 import 'dart:convert';
 
-ProductModel productModelFromJson(String str) {
-  final jsonData = json.decode(str);
-  return ProductModel.fromJson(jsonData);
-}
+ProductModel productModelFromJson(String str) =>
+    ProductModel.fromJson(json.decode(str));
+
+String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
 class ProductModel {
   List<Product>? products;
@@ -23,6 +23,13 @@ class ProductModel {
     skip: json["skip"],
     limit: json["limit"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "products": products?.map((x) => x.toJson()).toList(),
+    "total": total,
+    "skip": skip,
+    "limit": limit,
+  };
 }
 
 class Product {
@@ -99,6 +106,31 @@ class Product {
     images: List<String>.from(json["images"].map((x) => x)),
     thumbnail: json["thumbnail"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "description": description,
+    "category": categoryValues.reverse?[category],
+    "price": price,
+    "discountPercentage": discountPercentage,
+    "rating": rating,
+    "stock": stock,
+    "tags": tags,
+    "brand": brand,
+    "sku": sku,
+    "weight": weight,
+    "dimensions": dimensions?.toJson(),
+    "warrantyInformation": warrantyInformation,
+    "shippingInformation": shippingInformation,
+    "availabilityStatus": availabilityStatusValues.reverse?[availabilityStatus],
+    "reviews": reviews?.map((x) => x.toJson()).toList(),
+    "returnPolicy": returnPolicyValues.reverse?[returnPolicy],
+    "minimumOrderQuantity": minimumOrderQuantity,
+    "meta": meta?.toJson(),
+    "images": images,
+    "thumbnail": thumbnail,
+  };
 }
 
 enum AvailabilityStatus { IN_STOCK, LOW_STOCK }
@@ -129,6 +161,12 @@ class Dimensions {
     height: json["height"].toDouble(),
     depth: json["depth"].toDouble(),
   );
+
+  Map<String, dynamic> toJson() => {
+    "width": width,
+    "height": height,
+    "depth": depth,
+  };
 }
 
 class Meta {
@@ -145,6 +183,13 @@ class Meta {
     barcode: json["barcode"],
     qrCode: json["qrCode"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "barcode": barcode,
+    "qrCode": qrCode,
+  };
 }
 
 enum ReturnPolicy {
@@ -185,6 +230,14 @@ class Review {
     reviewerName: json["reviewerName"],
     reviewerEmail: json["reviewerEmail"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "rating": rating,
+    "comment": comment,
+    "date": date,
+    "reviewerName": reviewerName,
+    "reviewerEmail": reviewerEmail,
+  };
 }
 
 class EnumValues<T> {

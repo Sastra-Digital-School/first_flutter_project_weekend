@@ -139,9 +139,12 @@ class DestinationCard extends StatelessWidget {
           Positioned(
             top: 16,
             right: 16,
-            child: CircleAvatar(
-              backgroundColor: Colors.white24,
-              child: Icon(Icons.favorite_border, color: Colors.white),
+            child: GestureDetector(
+              onTap: () {},
+              child: CircleAvatar(
+                backgroundColor: Colors.white24,
+                child: Icon(Icons.upload, color: Colors.white),
+              ),
             ),
           ),
           // Gradient overlay

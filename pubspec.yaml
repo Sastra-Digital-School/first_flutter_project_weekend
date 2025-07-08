@@ -43,6 +43,9 @@ dependencies:
   stacked_card_carousel: ^0.0.4
   slide_to_act: ^2.0.2
   flutter_screenutil: ^5.9.3
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
